@@ -258,6 +258,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 }
 </pre>
 
+<h1>How can I change state of particular widget? </h1>
+
 <div>
   <h3>1️⃣ Using setState() (For Local Widget State)</h3>
   <p>If you want to update a widget inside its own <code>StatefulWidget</code>, use <code>setState()</code>:</p>
