@@ -188,4 +188,71 @@ Future<void> uploadImage(File image) async {
 <h2>40. How do you handle deep linking in Flutter?</h2>
 <p>Use Firebase Dynamic Links or go_router package to handle deep links efficiently.</p>
 
+<h2>41. What are the different local storage options in Flutter?</h2>
+<p>Flutter provides options like SharedPreferences, Hive, Sqflite, and SecureStorage for storing data locally.</p>
+
+<h2>42. How do you use SharedPreferences in Flutter?</h2>
+<pre><code>import 'package:shared_preferences/shared_preferences.dart';
+Future<void> saveData() async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setString('username', 'JohnDoe');
+}</code></pre>
+
+<h2>43. What is Hive, and how does it compare to Sqflite?</h2>
+<p>Hive is a NoSQL key-value database optimized for performance, while Sqflite is a SQL-based relational database.</p>
+
+<h2>44. Explain Firebase Firestore vs Firebase Realtime Database.</h2>
+<p>Firestore is a scalable document-based database, whereas Realtime Database stores data in JSON format.</p>
+
+<h2>45. How do you implement SQLite in Flutter?</h2>
+<pre><code>import 'package:sqflite/sqflite.dart';
+Database database = await openDatabase('my_db.db');</code></pre>
+
+<h2>46. What is the use of Isar database?</h2>
+<p>Isar is a fast, lightweight NoSQL database that supports complex queries and relationships.</p>
+
+<h2>47. How do you store encrypted data in Flutter?</h2>
+<p>Use flutter_secure_storage or encrypt package to store encrypted data securely.</p>
+
+<h2>48. How do you handle large amounts of data efficiently in Flutter?</h2>
+<p>Use pagination, lazy loading, and efficient database queries to handle large data sets.</p>
+
+<h2>49. What is ObjectBox, and why is it useful?</h2>
+<p>ObjectBox is a high-performance NoSQL database with support for reactive queries.</p>
+
+<h2>50. Explain the use of Secure Storage in Flutter.</h2>
+<p>Secure Storage ensures sensitive data is encrypted and stored safely on a device.</p>
+
+<h2>51. How do you improve the performance of a Flutter app?</h2>
+<p>Optimize widget rebuilds, use const constructors, and reduce unnecessary UI redraws.</p>
+
+<h2>52. What is tree shaking, and how does it help in Flutter?</h2>
+<p>Tree shaking removes unused code during compilation, reducing app size.</p>
+
+<h2>53. How do you profile a Flutter app using DevTools?</h2>
+<p>Use Flutter DevTools to analyze UI performance, memory usage, and CPU profiling.</p>
+
+<h2>54. What is repaint boundary, and how does it improve performance?</h2>
+<p>Repaint boundaries limit the area that needs to be redrawn, improving efficiency.</p>
+
+<h2>55. What is Flutter's rendering pipeline, and how does it work?</h2>
+<p>Flutter's rendering pipeline consists of build, layout, paint, and compositing phases.</p>
+
+<h2>56. How do you reduce widget rebuilds in Flutter?</h2>
+<p>Use const constructors, ValueListenableBuilder, and Efficient ListView builders.</p>
+
+<h2>57. What is laggy scrolling, and how do you optimize it?</h2>
+<p>Laggy scrolling happens due to expensive UI operations; use ListView.builder and caching.</p>
+
+<h2>58. What is the difference between const and final in Flutter?</h2>
+<p>const is a compile-time constant, while final is determined at runtime.</p>
+
+<h2>59. How do you optimize memory usage in Flutter?</h2>
+<p>Dispose of controllers, avoid memory leaks, and use efficient data structures.</p>
+
+<h2>60. How do you use isolate for background processing?</h2>
+<pre><code>import 'dart:isolate';
+void startBackgroundTask(SendPort sendPort) {
+  sendPort.send("Task Completed");
+}</code></pre>
     
