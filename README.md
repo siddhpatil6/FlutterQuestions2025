@@ -5,7 +5,7 @@
   <h2>1. What is Flutter?</h2>
   <p>Flutter is an open-source UI toolkit developed by Google for building natively compiled applications for mobile, web, and desktop from a single codebase.</p>
 
-<h2>SOLID Principles in Flutter</h2>
+<h2>2. SOLID Principles in Flutter</h2>
 
 <h3>1. Single Responsibility Principle (SRP)</h3>
 <p>A class should have only one reason to change.</p>
