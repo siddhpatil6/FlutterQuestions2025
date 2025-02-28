@@ -107,6 +107,161 @@ class FirebaseService implements DatabaseService {
   </tr>
 </table>
 
+
+<h2>Stateful Lifecycle Methods in Flutter</h2>
+
+<h3>Key Stateful Lifecycle Methods</h3>
+
+<h4>initState()</h4>
+<p>Called once when the widget is inserted into the widget tree.</p>
+<p>Used for one-time initializations, such as setting up controllers or fetching data.</p>
+
+<pre>
+@override
+void initState() {
+  super.initState();
+  print("Widget Initialized");
+}
+</pre>
+
+<h4>didChangeDependencies()</h4>
+<p>Called when an inherited widget (like Provider, InheritedWidget) the widget depends on changes.</p>
+<p>Called after initState().</p>
+<p>Useful when fetching data that depends on inherited widgets.</p>
+
+<pre>
+@override
+void didChangeDependencies() {
+  super.didChangeDependencies();
+  print("Dependencies Changed");
+}
+</pre>
+
+<h4>build(BuildContext context)</h4>
+<p>Called every time the widget needs to be rebuilt.</p>
+<p>Should be pure (avoid side effects).</p>
+
+<pre>
+@override
+Widget build(BuildContext context) {
+  return Text("Hello, Flutter!");
+}
+</pre>
+
+<h4>setState(fn)</h4>
+<p>Triggers a rebuild of the widget when the internal state changes.</p>
+
+<pre>
+void incrementCounter() {
+  setState(() {
+    counter++;
+  });
+}
+</pre>
+
+<h4>didUpdateWidget(covariant T oldWidget)</h4>
+<p>Called when the parent widget updates and needs to rebuild the State object.</p>
+<p>Useful when reconfiguring based on widget properties.</p>
+
+<pre>
+@override
+void didUpdateWidget(covariant MyWidget oldWidget) {
+  super.didUpdateWidget(oldWidget);
+  print("Widget Updated");
+}
+</pre>
+
+<h4>deactivate()</h4>
+<p>Called when the widget is removed from the widget tree.</p>
+<p>Might be reinserted later.</p>
+
+<pre>
+@override
+void deactivate() {
+  super.deactivate();
+  print("Widget Deactivated");
+}
+</pre>
+
+<h4>dispose()</h4>
+<p>Called when the widget is permanently removed.</p>
+<p>Used to release resources (e.g., controllers, streams, animations).</p>
+
+<pre>
+@override
+void dispose() {
+  myController.dispose();
+  super.dispose();
+  print("Widget Disposed");
+}
+</pre>
+
+<h3>Lifecycle Flow</h3>
+
+<pre>
+initState() → didChangeDependencies() → build()
+→ (State Changes) → setState() → build()
+→ didUpdateWidget() → build()
+→ deactivate() → dispose()
+</pre>
+
+<h3>Use Case Example</h3>
+
+<pre>
+class MyStatefulWidget extends StatefulWidget {
+  @override
+  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
+}
+
+class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  int counter = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    print("initState: Widget Initialized");
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print("didChangeDependencies: Dependencies Changed");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text("Counter: $counter"),
+        ElevatedButton(
+          onPressed: () => setState(() => counter++),
+          child: Text("Increment"),
+        ),
+      ],
+    );
+  }
+
+  @override
+  void didUpdateWidget(covariant MyStatefulWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    print("didUpdateWidget: Widget Updated");
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+    print("deactivate: Widget Removed");
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    print("dispose: Widget Destroyed");
+  }
+}
+</pre>
+
+
     
   <h2>2. Difference between StatelessWidget and StatefulWidget?</h2>
   <p><strong>StatelessWidget:</strong> Immutable and cannot change its state after it is built.</p>
