@@ -108,3 +108,84 @@ Future<void> fetchData() async {
         <li>Hot reload feature</li>
         <li>Rich widget library</li>
     </ul>
+
+<h2>21. How does Flutter handle responsive UI design?</h2>
+<p>Flutter provides widgets like MediaQuery, LayoutBuilder, and packages like flutter_screenutil to adapt UI based on screen size.</p>
+
+<h2>22. What is the difference between Flexible and Expanded?</h2>
+<p><strong>Flexible:</strong> Allows a widget to occupy available space but does not force it.</p>
+<p><strong>Expanded:</strong> Forces a widget to take all available space.</p>
+
+<h2>23. What is the difference between SizedBox and Container?</h2>
+<p><strong>SizedBox:</strong> Used to define a specific width and height without additional properties.</p>
+<p><strong>Container:</strong> More flexible, allowing padding, decoration, margin, etc.</p>
+
+<h2>24. Explain the role of MediaQuery in Flutter.</h2>
+<p>MediaQuery provides information about the screen size, orientation, and other display properties, helping in building responsive UIs.</p>
+
+<h2>25. What are Slivers, and why are they used?</h2>
+<p>Slivers are scrollable areas used within CustomScrollView to create smooth scrolling effects.</p>
+
+<h2>26. What is the difference between Stack and Column/Row?</h2>
+<p>Stack positions widgets on top of each other, whereas Column and Row align widgets in a vertical or horizontal sequence.</p>
+
+<h2>27. How do you handle screen orientation changes in Flutter?</h2>
+<p>Use the OrientationBuilder widget to rebuild UI when the device orientation changes.</p>
+
+<h2>28. What is the use of CustomPainter in Flutter?</h2>
+<p>CustomPainter allows creating complex custom shapes, graphics, and animations using the Canvas API.</p>
+
+<h2>29. What is Hero animation, and how does it work?</h2>
+<p>Hero animations provide seamless transitions between screens using shared elements identified by a Hero tag.</p>
+
+<h2>30. How do you create a custom widget in Flutter?</h2>
+<p>Create a reusable StatelessWidget or StatefulWidget by extending the respective class.</p>
+
+<h2>31. How do you make an API call with Dio in Flutter?</h2>
+<pre><code>import 'package:dio/dio.dart';
+Dio dio = Dio();
+Future<void> fetchData() async {
+  var response = await dio.get('https://api.example.com/data');
+  print(response.data);
+}</code></pre>
+
+<h2>32. How do you handle API errors in Flutter?</h2>
+<p>Use try-catch blocks and handle different HTTP status codes gracefully.</p>
+
+<h2>33. How can you implement pagination in a ListView?</h2>
+<p>Use ListView.builder along with a scroll listener to fetch more data when reaching the end.</p>
+
+<h2>34. What is the difference between FutureBuilder and StreamBuilder?</h2>
+<p><strong>FutureBuilder:</strong> Used for handling one-time async operations.</p>
+<p><strong>StreamBuilder:</strong> Used for continuous data streams like WebSockets.</p>
+
+<h2>35. How do you implement WebSocket communication in Flutter?</h2>
+<pre><code>import 'dart:io';
+WebSocket.connect('ws://example.com/socket').then((WebSocket socket) {
+  socket.listen((data) {
+    print("Received: \$data");
+  });
+});</code></pre>
+
+<h2>36. How do you cache API responses in Flutter?</h2>
+<p>Use shared_preferences, hive, or dio_cache_interceptor to store API responses locally.</p>
+
+<h2>37. What is the use of GraphQL in Flutter?</h2>
+<p>GraphQL allows fetching only the required data instead of entire endpoints, reducing network usage.</p>
+
+<h2>38. How do you handle authentication tokens in Flutter apps?</h2>
+<p>Store tokens securely using flutter_secure_storage or shared_preferences.</p>
+
+<h2>39. How do you upload an image to a server using Flutter?</h2>
+<pre><code>import 'package:http/http.dart' as http;
+import 'dart:io';
+Future<void> uploadImage(File image) async {
+  var request = http.MultipartRequest('POST', Uri.parse('https://api.example.com/upload'));
+  request.files.add(await http.MultipartFile.fromPath('image', image.path));
+  var response = await request.send();
+}</code></pre>
+
+<h2>40. How do you handle deep linking in Flutter?</h2>
+<p>Use Firebase Dynamic Links or go_router package to handle deep links efficiently.</p>
+
+    
