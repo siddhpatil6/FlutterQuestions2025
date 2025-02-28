@@ -261,7 +261,205 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 }
 </pre>
 
+<div>
+  <h3>1️⃣ Using setState() (For Local Widget State)</h3>
+  <p>If you want to update a widget inside its own <code>StatefulWidget</code>, use <code>setState()</code>:</p>
+  <pre>
+    <code>
+class CounterWidget extends StatefulWidget {
+  @override
+  _CounterWidgetState createState() => _CounterWidgetState();
+}
 
+class _CounterWidgetState extends State&lt;CounterWidget&gt; {
+  int counter = 0;
+
+  void incrementCounter() {
+    setState(() {
+      counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text("Counter: $counter"),
+        ElevatedButton(
+          onPressed: incrementCounter,
+          child: Text("Increment"),
+        ),
+      ],
+    );
+  }
+}
+    </code>
+  </pre>
+  <p>✅ Best for: Self-contained widgets that manage their own state.</p>
+</div>
+
+<div>
+  <h3>2️⃣ Using Callbacks (For Parent-Child Communication)</h3>
+  <p>If a parent widget wants to change a child widget's state, you can pass a function (callback) to the child.</p>
+  <pre>
+    <code>
+class ParentWidget extends StatefulWidget {
+  @override
+  _ParentWidgetState createState() => _ParentWidgetState();
+}
+
+class _ParentWidgetState extends State&lt;ParentWidget&gt; {
+  int counter = 0;
+
+  void incrementCounter() {
+    setState(() {
+      counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text("Parent Counter: $counter"),
+        ChildWidget(onPressed: incrementCounter),
+      ],
+    );
+  }
+}
+
+class ChildWidget extends StatelessWidget {
+  final VoidCallback onPressed;
+
+  ChildWidget({required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      child: Text("Increment Parent Counter"),
+    );
+  }
+}
+    </code>
+  </pre>
+  <p>✅ Best for: When a parent needs to change a child’s state.</p>
+</div>
+
+<div>
+  <h3>3️⃣ Using GlobalKey (For Changing State from Outside)</h3>
+  <p>If you need to update a specific widget from anywhere in the widget tree, use a <code>GlobalKey</code>.</p>
+  <pre>
+    <code>
+class _CounterWidgetState extends State&lt;CounterWidget&gt; {
+  int counter = 0;
+
+  void incrementCounter() {
+    setState(() {
+      counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Text("Counter: $counter");
+  }
+}
+
+class ParentWidget extends StatelessWidget {
+  final GlobalKey&lt;_CounterWidgetState&gt; counterKey = GlobalKey();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        CounterWidget(key: counterKey),
+        ElevatedButton(
+          onPressed: () => counterKey.currentState?.incrementCounter(),
+          child: Text("Increment"),
+        ),
+      ],
+    );
+  }
+}
+    </code>
+  </pre>
+  <p>✅ Best for: When you need to change a widget's state from outside its build context.</p>
+</div>
+
+<div>
+  <h3>4️⃣ Using State Management (Provider, Riverpod, Bloc, GetX)</h3>
+  <p>For complex apps, use state management solutions like <strong>Provider, Riverpod, GetX, or Bloc</strong>.</p>
+  <pre>
+    <code>
+class CounterProvider with ChangeNotifier {
+  int counter = 0;
+
+  void increment() {
+    counter++;
+    notifyListeners();
+  }
+}
+
+void main() {
+  runApp(ChangeNotifierProvider(
+    create: (_) => CounterProvider(),
+    child: MyApp(),
+  ));
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Column(
+          children: [
+            Consumer&lt;CounterProvider&gt;(
+              builder: (context, provider, child) {
+                return Text("Counter: ${provider.counter}");
+              },
+            ),
+            ElevatedButton(
+              onPressed: () => context.read&lt;CounterProvider&gt;().increment(),
+              child: Text("Increment"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+    </code>
+  </pre>
+  <p>✅ Best for: Managing global state across multiple widgets.</p>
+</div>
+
+<div>
+  <h3>💡 Which Approach to Choose?</h3>
+  <table border="1">
+    <tr>
+      <th>Approach</th>
+      <th>Best Use Case</th>
+    </tr>
+    <tr>
+      <td><code>setState()</code></td>
+      <td>When the state change is local to a widget</td>
+    </tr>
+    <tr>
+      <td>Callbacks</td>
+      <td>When a parent needs to change a child’s state</td>
+    </tr>
+    <tr>
+      <td><code>GlobalKey</code></td>
+      <td>When you need to access a widget’s state from outside</td>
+    </tr>
+    <tr>
+      <td>State Management</td>
+      <td>For managing state across multiple widgets efficiently</td>
+    </tr>
+  </table>
+</div>
     
   <h2>2. Difference between StatelessWidget and StatefulWidget?</h2>
   <p><strong>StatelessWidget:</strong> Immutable and cannot change its state after it is built.</p>
