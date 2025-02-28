@@ -199,10 +199,7 @@ void dispose() {
 <h3>Lifecycle Flow</h3>
 
 <pre>
-initState() → didChangeDependencies() → build()
-→ (State Changes) → setState() → build()
-→ didUpdateWidget() → build()
-→ deactivate() → dispose()
+initState() → didChangeDependencies() → build() → (State Changes) → setState() → build() → didUpdateWidget() → build()→ deactivate() → dispose()
 </pre>
 
 <h3>Use Case Example</h3>
