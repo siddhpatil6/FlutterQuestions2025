@@ -4,6 +4,42 @@
     
   <h2>1. What is Flutter?</h2>
   <p>Flutter is an open-source UI toolkit developed by Google for building natively compiled applications for mobile, web, and desktop from a single codebase.</p>
+
+  <h2>101.Flutter Architecture</h1>
+ <p>Flutter architecture is designed to provide a highly performant and flexible framework for building cross-platform applications. It consists of multiple layers that work together 
+to render UI and handle application logic efficiently.</p>
+    
+<h3>Flutter Architecture Overview</h3>
+    <p>Flutter follows a layered architecture, which can be broken down into the following key components:</p>
+    
+<h3>1. Flutter Framework (UI & Business Logic Layer)</h3>
+    <ul>
+        <li>This is the top-most layer where developers interact.</li>
+        <li>It is written in <strong>Dart</strong> and provides a rich set of pre-built widgets for UI development.</li>
+        <li>The framework consists of three sub-layers:
+            <ul>
+                <li><strong>Widgets:</strong> UI components like <code>Container</code>, <code>Text</code>, <code>Row</code>, <code>Column</code>, <code>ListView</code>, etc.</li>
+                <li><strong>Rendering:</strong> Handles layout, painting, and compositing widgets into a tree.</li>
+                <li><strong>Gestures & Animation:</strong> Handles user interactions like touch, swipe, drag, and smooth animations.</li>
+            </ul>
+        </li>
+    </ul>
+    
+<h3>2. Flutter Engine (Rendering & Low-level APIs)</h3>
+    <ul>
+        <li>Written in <strong>C++</strong>, the engine is responsible for rendering UI and executing Flutter code.</li>
+        <li>Uses <strong>Skia Graphics Library</strong> for 2D rendering.</li>
+        <li>Provides low-level APIs for text rendering, accessibility, and plugin communication.</li>
+    </ul>
+    
+<h3>3. Embedder (Platform-specific Integration)</h3>
+    <ul>
+        <li>This layer integrates Flutter with the native platform (Android, iOS, Web, Windows, macOS, Linux).</li>
+        <li>Uses <strong>platform channels</strong> to communicate between Flutter and native code (e.g., accessing camera, GPS, or notifications).</li>
+        <li>On Android, Flutter is embedded using a <code>FlutterActivity</code>, while on iOS, it uses <code>FlutterViewController</code>.</li>
+    </ul>    
+
+    
     
   <h2>2. Difference between StatelessWidget and StatefulWidget?</h2>
   <p><strong>StatelessWidget:</strong> Immutable and cannot change its state after it is built.</p>
@@ -407,36 +443,4 @@ void startBackgroundTask(SendPort sendPort) {
 <p>We are continuously updating this guide. Stay tuned for more interview questions and answers.</p>
     <p>We are continuously updating this guide. Stay tuned for more interview questions and answers.</p>
 
-<h2>101.Flutter Architecture</h1>
-    <p>Flutter architecture is designed to provide a highly performant and flexible framework for building cross-platform applications. It consists of multiple layers that work together 
-to render UI and handle application logic efficiently.</p>
-    
-<h3>Flutter Architecture Overview</h3>
-    <p>Flutter follows a layered architecture, which can be broken down into the following key components:</p>
-    
-<h3>1. Flutter Framework (UI & Business Logic Layer)</h3>
-    <ul>
-        <li>This is the top-most layer where developers interact.</li>
-        <li>It is written in <strong>Dart</strong> and provides a rich set of pre-built widgets for UI development.</li>
-        <li>The framework consists of three sub-layers:
-            <ul>
-                <li><strong>Widgets:</strong> UI components like <code>Container</code>, <code>Text</code>, <code>Row</code>, <code>Column</code>, <code>ListView</code>, etc.</li>
-                <li><strong>Rendering:</strong> Handles layout, painting, and compositing widgets into a tree.</li>
-                <li><strong>Gestures & Animation:</strong> Handles user interactions like touch, swipe, drag, and smooth animations.</li>
-            </ul>
-        </li>
-    </ul>
-    
-<h3>2. Flutter Engine (Rendering & Low-level APIs)</h3>
-    <ul>
-        <li>Written in <strong>C++</strong>, the engine is responsible for rendering UI and executing Flutter code.</li>
-        <li>Uses <strong>Skia Graphics Library</strong> for 2D rendering.</li>
-        <li>Provides low-level APIs for text rendering, accessibility, and plugin communication.</li>
-    </ul>
-    
-<h3>3. Embedder (Platform-specific Integration)</h3>
-    <ul>
-        <li>This layer integrates Flutter with the native platform (Android, iOS, Web, Windows, macOS, Linux).</li>
-        <li>Uses <strong>platform channels</strong> to communicate between Flutter and native code (e.g., accessing camera, GPS, or notifications).</li>
-        <li>On Android, Flutter is embedded using a <code>FlutterActivity</code>, while on iOS, it uses <code>FlutterViewController</code>.</li>
-    </ul>    
+
