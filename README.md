@@ -255,4 +255,156 @@ Database database = await openDatabase('my_db.db');</code></pre>
 void startBackgroundTask(SendPort sendPort) {
   sendPort.send("Task Completed");
 }</code></pre>
+
+<h2>61. What is Navigator 1.0 vs Navigator 2.0?</h2>
+<p>Navigator 1.0 uses a stack-based approach with push/pop methods, whereas Navigator 2.0 provides declarative navigation using Router and Page APIs.</p>
+
+<h2>62. How do you pass data between two screens in Flutter?</h2>
+<pre><code>Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (context) => SecondScreen(data: 'Hello'),
+  ),
+);</code></pre>
+
+<h2>63. What is named routing, and why is it useful?</h2>
+<p>Named routes simplify navigation by defining route names in a centralized way.</p>
+
+<h2>64. How do you implement deep linking in Flutter?</h2>
+<p>Use Firebase Dynamic Links or go_router to handle deep links efficiently.</p>
+
+<h2>65. What is GoRouter, and how does it work?</h2>
+<p>GoRouter is a declarative routing package for Flutter that simplifies navigation, deep linking, and redirections.</p>
+
+<h2>66. How do you implement bottom navigation in Flutter?</h2>
+<pre><code>BottomNavigationBar(
+  items: [
+    BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+    BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
+  ],
+);</code></pre>
+
+<h2>67. How do you use PageView for swipe navigation?</h2>
+<pre><code>PageView(
+  children: [Page1(), Page2(), Page3()],
+);</code></pre>
+
+<h2>68. How does WillPopScope work in Flutter?</h2>
+<p>WillPopScope prevents users from exiting a screen unless a condition is met.</p>
+
+<h2>69. What is modal bottom sheet, and how is it different from a dialog?</h2>
+<p>A modal bottom sheet appears from the bottom, while a dialog appears in the center.</p>
+
+<h2>70. What is auto_route, and why should you use it?</h2>
+<p>auto_route is a code-generation package that simplifies navigation management in Flutter apps.</p>
+
+<h2>71. What are the different types of animations in Flutter?</h2>
+<ul>
+    <li>Implicit Animations (AnimatedContainer, AnimatedOpacity)</li>
+    <li>Explicit Animations (AnimationController, Tween)</li>
+</ul>
+
+<h2>72. How does the AnimationController work?</h2>
+<p>AnimationController controls the timing of an animation, providing control over start, stop, and repeat.</p>
+
+<h2>73. What is TweenAnimationBuilder, and how is it useful?</h2>
+<p>TweenAnimationBuilder animates between two values over a specified duration.</p>
+
+<h2>74. How do you implement fade animations in Flutter?</h2>
+<pre><code>FadeTransition(
+  opacity: animation,
+  child: MyWidget(),
+);</code></pre>
+
+<h2>75. What is the difference between AnimatedContainer and Container?</h2>
+<p>AnimatedContainer automatically animates changes, while Container updates instantly.</p>
+
+<h2>76. What is Lottie animation, and how do you use it?</h2>
+<p>Lottie allows using JSON-based animations in Flutter.</p>
+
+<h2>77. How do you create a custom animation in Flutter?</h2>
+<p>Use AnimationController and Tween for custom animations.</p>
+
+<h2>78. How do you implement physics-based animations?</h2>
+<p>Use the physics package or SpringSimulation for realistic animations.</p>
+
+<h2>79. What is Flare animation, and how does it work?</h2>
+<p>Flare is an advanced animation tool that allows vector-based animations.</p>
+
+<h2>80. How do you use AnimationBuilder in Flutter?</h2>
+<pre><code>AnimatedBuilder(
+  animation: animation,
+  builder: (context, child) {
+    return Transform.scale(scale: animation.value, child: child);
+  },
+  child: MyWidget(),
+);</code></pre>
+
+<h2>81. What are the different types of testing in Flutter?</h2>
+<ul>
+    <li>Unit Tests</li>
+    <li>Widget Tests</li>
+    <li>Integration Tests</li>
+</ul>
+
+<h2>82. How do you write unit tests in Flutter?</h2>
+<p>Use the flutter_test package to test business logic.</p>
+
+<h2>83. How do you write widget tests in Flutter?</h2>
+<p>Use WidgetTester to simulate UI interactions.</p>
+
+<h2>84. What is mocking, and why is it used in testing?</h2>
+<p>Mocking simulates dependencies for unit testing.</p>
+
+<h2>85. How do you debug a Flutter app using Flutter DevTools?</h2>
+<p>Use DevTools to inspect UI, analyze performance, and debug memory usage.</p>
+
+<h2>86. What are golden tests, and when should you use them?</h2>
+<p>Golden tests compare UI snapshots to detect visual changes.</p>
+
+<h2>87. What is the difference between Flutter Inspector and Debug Console?</h2>
+<p>Flutter Inspector visualizes UI hierarchy, while Debug Console logs errors and prints statements.</p>
+
+<h2>88. How do you handle errors in Flutter?</h2>
+<p>Use try-catch, ErrorWidget.builder, and FlutterError.onError.</p>
+
+<h2>89. What is the use of FlutterError.onError?</h2>
+<p>FlutterError.onError captures and handles framework errors globally.</p>
+
+<h2>90. How do you test API calls in Flutter?</h2>
+<p>Use the mockito package to mock API responses.</p>
+
+<h2>91. What is Flutter Web, and how does it work?</h2>
+<p>Flutter Web compiles Dart code to JavaScript for web applications.</p>
+
+<h2>92. How do you create a Flutter plugin?</h2>
+<p>Use the flutter create --template=plugin command.</p>
+
+<h2>93. What is Platform Channels, and how do they work?</h2>
+<p>Platform Channels allow Flutter to communicate with native Android/iOS code.</p>
+
+<h2>94. How do you integrate native code (Kotlin/Swift) in Flutter?</h2>
+<p>Use MethodChannel to invoke native methods.</p>
+
+<h2>95. What is the difference between MethodChannel and EventChannel?</h2>
+<p>MethodChannel is for single responses, while EventChannel streams continuous data.</p>
+
+<h2>96. How do you build a Flutter app for desktop?</h2>
+<p>Enable desktop support using flutter config --enable-windows-desktop.</p>
+
+<h2>97. What is Flutter FFI, and when should you use it?</h2>
+<p>FFI (Foreign Function Interface) allows calling native C code from Flutter.</p>
+
+<h2>98. How do you handle background tasks in Flutter?</h2>
+<p>Use isolates, background services, and WorkManager.</p>
+
+<h2>99. How do you optimize Flutter Web apps?</h2>
+<p>Minimize asset sizes, use deferred loading, and optimize JavaScript output.</p>
+
+<h2>100. What are Flutter’s limitations, and how can they be overcome?</h2>
+<p>Flutter lacks advanced platform-specific APIs, but using plugins and platform channels helps mitigate this.</p>
+<p>We are continuously updating this guide. Stay tuned for more interview questions and answers.</p>
+<p>We are continuously updating this guide. Stay tuned for more interview questions and answers.</p>
+    <p>We are continuously updating this guide. Stay tuned for more interview questions and answers.</p>
+
     
