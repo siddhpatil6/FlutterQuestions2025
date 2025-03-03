@@ -109,154 +109,187 @@ class FirebaseService implements DatabaseService {
 
 
 <h2>Stateful Lifecycle Methods in Flutter</h2>
+<h1>1️⃣ createState()</h1>
+  <p>📌 What it does?</p>
+  <p>- Called once when the widget is first created.</p>
+  <p>- Returns an instance of the State class.</p>
+  <p>📝 Example:</p>
+  <code>
+    class MyWidget extends StatefulWidget {<br>
+      @override<br>
+      _MyWidgetState createState() {<br>
+        print("createState() called");<br>
+        return _MyWidgetState();<br>
+      }<br>
+    }
+  </code>
+  <p>🔹 Key Points:</p>
+  <p>✔️ Used to create the state object.</p>
+  <p>✔️ Called only once when the widget is first inserted.</p>
 
-<h3>Key Stateful Lifecycle Methods</h3>
+  <h1>2️⃣ initState()</h1>
+  <p>📌 What it does?</p>
+  <p>- Called once when the widget is first added to the widget tree.</p>
+  <p>- Used for initialization, like setting up API calls, animation controllers, and streams.</p>
+  <p>📝 Example: Fetching API Data</p>
+  <code>
+    class _MyWidgetState extends State&lt;MyWidget&gt; {<br>
+      @override<br>
+      void initState() {<br>
+        super.initState();<br>
+        print("initState() called");<br>
+      }<br>
+    }
+  </code>
+  <p>🔹 Key Points:</p>
+  <p>✔️ Runs only once when the widget is created.</p>
+  <p>✔️ Used for fetching API data, initializing variables, or setting up listeners.</p>
 
-<h4>initState()</h4>
-<p>Called once when the widget is inserted into the widget tree.</p>
-<p>Used for one-time initializations, such as setting up controllers or fetching data.</p>
+  <h1>3️⃣ didChangeDependencies()</h1>
+  <p>📌 What it does?</p>
+  <p>- Called when inherited widgets (like Theme or Locale) change.</p>
+  <p>- Runs after initState().</p>
+  <p>📝 Example: Listening for Theme Changes</p>
+  <code>
+    class _MyWidgetState extends State&lt;MyWidget&gt; {<br>
+      @override<br>
+      void didChangeDependencies() {<br>
+        super.didChangeDependencies();<br>
+        print("didChangeDependencies() called");<br>
+      }<br>
+    }
+  </code>
+  <p>🔹 Key Points:</p>
+  <p>✔️ Useful when using MediaQuery or Theme.of(context).</p>
+  <p>✔️ Called when dependencies change (e.g., after setState() in a parent widget).</p>
 
-<pre>
-@override
-void initState() {
-  super.initState();
-  print("Widget Initialized");
-}
-</pre>
+  <h1>4️⃣ build()</h1>
+  <p>📌 What it does?</p>
+  <p>- Called every time the UI needs to be redrawn.</p>
+  <p>- Returns the widget tree that defines the UI.</p>
+  <p>📝 Example: Button to Change State</p>
+  <code>
+    class _MyWidgetState extends State&lt;MyWidget&gt; {<br>
+      int counter = 0;<br>
+      @override<br>
+      Widget build(BuildContext context) {<br>
+        print("build() called");<br>
+        return Column(<br>
+          children: [<br>
+            Text("Counter: $counter"),<br>
+            ElevatedButton(<br>
+              onPressed: () {<br>
+                setState(() {<br>
+                  counter++;<br>
+                });<br>
+              },<br>
+              child: Text("Increment"),<br>
+            ),<br>
+          ],<br>
+        );<br>
+      }<br>
+    }
+  </code>
+  <p>🔹 Key Points:</p>
+  <p>✔️ Runs every time setState() is called.</p>
+  <p>✔️ Used to create UI elements dynamically.</p>
 
-<h4>didChangeDependencies()</h4>
-<p>Called when an inherited widget (like Provider, InheritedWidget) the widget depends on changes.</p>
-<p>Called after initState().</p>
-<p>Useful when fetching data that depends on inherited widgets.</p>
+  <h1>5️⃣ didUpdateWidget()</h1>
+  <p>📌 What it does?</p>
+  <p>- Called when the parent widget rebuilds and provides new properties to the child.</p>
+  <p>- Useful when the widget reuses state instead of creating a new instance.</p>
+  <p>📝 Example: Detecting Prop Changes</p>
+  <code>
+    class _MyWidgetState extends State&lt;MyWidget&gt; {<br>
+      @override<br>
+      void didUpdateWidget(covariant MyWidget oldWidget) {<br>
+        super.didUpdateWidget(oldWidget);<br>
+        print("didUpdateWidget() called - Old: ${oldWidget.text}, New: ${widget.text}");<br>
+      }<br>
+    }
+  </code>
 
-<pre>
-@override
-void didChangeDependencies() {
-  super.didChangeDependencies();
-  print("Dependencies Changed");
-}
-</pre>
+  <h1>6️⃣ deactivate()</h1>
+  <p>📌 What it does?</p>
+  <p>- Called before a widget is removed from the widget tree.</p>
+  <p>- Happens when the widget moves to another part of the tree but is not destroyed.</p>
+  <p>📝 Example: Tracking Widget Movement</p>
+  <code>
+    class _MyWidgetState extends State&lt;MyWidget&gt; {<br>
+      @override<br>
+      void deactivate() {<br>
+        super.deactivate();<br>
+        print("deactivate() called");<br>
+      }<br>
+    }
+  </code>
 
-<h4>build(BuildContext context)</h4>
-<p>Called every time the widget needs to be rebuilt.</p>
-<p>Should be pure (avoid side effects).</p>
+  <h1>7️⃣ dispose()</h1>
+  <p>📌 What it does?</p>
+  <p>- Called when the widget is permanently removed from the widget tree.</p>
+  <p>- Used to clean up resources (e.g., close streams, cancel timers, dispose controllers).</p>
+  <p>📝 Example: Closing a Stream</p>
+  <code>
+    class _MyWidgetState extends State&lt;MyWidget&gt; {<br>
+      late StreamController&lt;int&gt; _controller;<br>
+      @override<br>
+      void initState() {<br>
+        super.initState();<br>
+        _controller = StreamController&lt;int&gt;();<br>
+      }<br>
+      @override<br>
+      void dispose() {<br>
+        _controller.close(); // Free up resources<br>
+        print("dispose() called");<br>
+        super.dispose();<br>
+      }<br>
+    }
+  </code>
 
-<pre>
-@override
-Widget build(BuildContext context) {
-  return Text("Hello, Flutter!");
-}
-</pre>
+  <h1>🚀 Lifecycle Flow</h1>
+  <p>1️⃣ createState() → Creates the state object</p>
+  <p>2️⃣ initState() → Initialize variables, API calls, etc.</p>
+  <p>3️⃣ didChangeDependencies() → Runs if inherited widgets (Theme, Locale) change</p>
+  <p>4️⃣ build() → Draws the UI</p>
+  <p>🔄 didUpdateWidget() → Called when widget properties change</p>
+  <p>🔽 deactivate() → Called before removal</p>
+  <p>🛑 dispose() → Clean up resources before destruction</p>
 
-<h4>setState(fn)</h4>
-<p>Triggers a rebuild of the widget when the internal state changes.</p>
-
-<pre>
-void incrementCounter() {
-  setState(() {
-    counter++;
-  });
-}
-</pre>
-
-<h4>didUpdateWidget(covariant T oldWidget)</h4>
-<p>Called when the parent widget updates and needs to rebuild the State object.</p>
-<p>Useful when reconfiguring based on widget properties.</p>
-
-<pre>
-@override
-void didUpdateWidget(covariant MyWidget oldWidget) {
-  super.didUpdateWidget(oldWidget);
-  print("Widget Updated");
-}
-</pre>
-
-<h4>deactivate()</h4>
-<p>Called when the widget is removed from the widget tree.</p>
-<p>Might be reinserted later.</p>
-
-<pre>
-@override
-void deactivate() {
-  super.deactivate();
-  print("Widget Deactivated");
-}
-</pre>
-
-<h4>dispose()</h4>
-<p>Called when the widget is permanently removed.</p>
-<p>Used to release resources (e.g., controllers, streams, animations).</p>
-
-<pre>
-@override
-void dispose() {
-  myController.dispose();
-  super.dispose();
-  print("Widget Disposed");
-}
-</pre>
-
-<h3>Lifecycle Flow</h3>
-
-<pre>
-initState() → didChangeDependencies() → build() → (State Changes) → setState() → build() → didUpdateWidget() → build()→ deactivate() → dispose()
-</pre>
-
-<h3>Use Case Example</h3>
-
-<pre>
-class MyStatefulWidget extends StatefulWidget {
-  @override
-  _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
-}
-
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  int counter = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    print("initState: Widget Initialized");
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    print("didChangeDependencies: Dependencies Changed");
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text("Counter: $counter"),
-        ElevatedButton(
-          onPressed: () => setState(() => counter++),
-          child: Text("Increment"),
-        ),
-      ],
-    );
-  }
-
-  @override
-  void didUpdateWidget(covariant MyStatefulWidget oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    print("didUpdateWidget: Widget Updated");
-  }
-
-  @override
-  void deactivate() {
-    super.deactivate();
-    print("deactivate: Widget Removed");
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    print("dispose: Widget Destroyed");
-  }
-}
-</pre>
+  <h1>🚀 Summary Table</h1>
+  <table border="1">
+    <tr>
+      <th>Lifecycle Method</th>
+      <th>Purpose</th>
+    </tr>
+    <tr>
+      <td>createState()</td>
+      <td>Creates the State object</td>
+    </tr>
+    <tr>
+      <td>initState()</td>
+      <td>Initialize variables, controllers, API calls</td>
+    </tr>
+    <tr>
+      <td>didChangeDependencies()</td>
+      <td>Runs when InheritedWidget (like Theme) changes</td>
+    </tr>
+    <tr>
+      <td>build()</td>
+      <td>Builds UI, called on setState()</td>
+    </tr>
+    <tr>
+      <td>didUpdateWidget()</td>
+      <td>Runs when widget properties change</td>
+    </tr>
+    <tr>
+      <td>deactivate()</td>
+      <td>Runs before the widget is removed/moved</td>
+    </tr>
+    <tr>
+      <td>dispose()</td>
+      <td>Cleanup: Close streams, controllers, etc.</td>
+    </tr>
+  </table>
 
 <h1>How can I change state of particular widget? </h1>
 
