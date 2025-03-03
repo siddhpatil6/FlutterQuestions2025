@@ -33,7 +33,7 @@ class CreditCardPayment implements PaymentMethod {
 </pre>
 
 <h3>3. Liskov Substitution Principle (LSP)</h3>
-<p>Derived classes must be substitutable for their base classes.</p>
+<p>object of the child class must be able to replace the object of the parent class without breaking the application</p>
 <pre>
 abstract class Bird {}
 
