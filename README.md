@@ -291,6 +291,107 @@ class FirebaseService implements DatabaseService {
     </tr>
   </table>
 
+  <h2>What is ChangeNotifier in Provider?</h2>
+
+<p>In Flutter, <strong>ChangeNotifier</strong> helps manage state efficiently with the <strong>Provider</strong> package. It notifies widgets when state changes, triggering UI rebuilds.</p>
+
+<h2>Key Points</h2>
+<ul>
+  <li>Part of Flutter's foundation library.</li>
+  <li>Notifies listeners when state changes.</li>
+  <li>Used with <strong>Provider</strong> for state management.</li>
+</ul>
+
+<h2>How ChangeNotifier Works</h2>
+<p>1. Extend <strong>ChangeNotifier</strong> in a class.<br>
+2. Call <strong>notifyListeners()</strong> to notify changes.<br>
+3. Wrap app with <strong>ChangeNotifierProvider</strong>.<br>
+4. Use <strong>context.watch&lt;T&gt;()</strong> or <strong>context.read&lt;T&gt;()</strong> to access state.</p>
+
+<h2>Example</h2>
+
+<h3>Step 1: Create a ChangeNotifier Class</h3>
+<pre><code>
+import 'package:flutter/material.dart';
+
+class CounterProvider extends ChangeNotifier {
+  int _count = 0;
+
+  int get count => _count;
+
+  void increment() {
+    _count++;
+    notifyListeners(); // Notify UI to rebuild
+  }
+}
+</code></pre>
+
+<h3>Step 2: Register Provider</h3>
+<pre><code>
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'counter_provider.dart';
+
+void main() {
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => CounterProvider(),
+      child: MyApp(),
+    ),
+  );
+}
+</code></pre>
+
+<h3>Step 3: Access Provider in UI</h3>
+<pre><code>
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'counter_provider.dart';
+
+class CounterScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Provider Example")),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Counter: ${context.watch&lt;CounterProvider&gt;().count}',
+              style: TextStyle(fontSize: 20),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                context.read&lt;CounterProvider&gt;().increment();
+              },
+              child: Text("Increment"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+</code></pre>
+
+<h2>Explanation</h2>
+<ul>
+  <li><strong>ChangeNotifierProvider</strong> provides <strong>CounterProvider</strong> to the widget tree.</li>
+  <li><strong>context.watch&lt;T&gt;()</strong> listens for changes and rebuilds UI.</li>
+  <li><strong>context.read&lt;T&gt;()</strong> gets instance without listening (used for actions).</li>
+</ul>
+
+<h2>Benefits</h2>
+<ul>
+  <li>Separates state from UI.</li>
+  <li>Improves performance.</li>
+  <li>Scalable state management.</li>
+</ul>
+
+<p>Using <strong>ChangeNotifier</strong> with <strong>Provider</strong> makes Flutter apps efficient and maintainable! 🚀</p>
+
+
 <h1>How can I change state of particular widget? </h1>
 
 <div>
