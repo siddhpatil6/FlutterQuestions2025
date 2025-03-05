@@ -704,6 +704,105 @@ class MyApp extends StatelessWidget {
   </tbody>
 </table>
 
+<h2>How to Register Multiple Providers</h2>
+
+<p>You can register multiple providers in Flutter using <strong>MultiProvider</strong>. This allows managing different pieces of state efficiently.</p>
+
+<h3>1️⃣ Using MultiProvider (Global Providers)</h3>
+
+<pre><code>
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+void main() {
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => CounterProvider()),
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
+      ],
+      child: MyApp(),
+    ),
+  );
+}
+</code></pre>
+
+<p><strong>MultiProvider</strong> efficiently wraps multiple providers.</p>
+
+<h3>2️⃣ Accessing Multiple Providers in UI</h3>
+
+<pre><code>
+class CounterProvider extends ChangeNotifier {
+  int _count = 0;
+  int get count => _count;
+  
+  void increment() {
+    _count++;
+    notifyListeners();
+  }
+}
+
+class ThemeProvider extends ChangeNotifier {
+  bool _isDarkMode = false;
+  bool get isDarkMode => _isDarkMode;
+
+  void toggleTheme() {
+    _isDarkMode = !_isDarkMode;
+    notifyListeners();
+  }
+}
+</code></pre>
+
+<h3>Using Providers in UI</h3>
+
+<pre><code>
+class MyHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var counterProvider = Provider.of&lt;CounterProvider&gt;(context);
+    var themeProvider = Provider.of&lt;ThemeProvider&gt;(context);
+
+    return Scaffold(
+      appBar: AppBar(title: Text("MultiProvider Example")),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("Counter: ${counterProvider.count}", style: TextStyle(fontSize: 20)),
+            ElevatedButton(
+              onPressed: () => counterProvider.increment(),
+              child: Text("Increment Counter"),
+            ),
+            Switch(
+              value: themeProvider.isDarkMode,
+              onChanged: (value) => themeProvider.toggleTheme(),
+            ),
+            Text(themeProvider.isDarkMode ? "Dark Mode" : "Light Mode"),
+          ],
+        ),
+      ),
+    );
+  }
+}
+</code></pre>
+
+<h3>3️⃣ Local Providers (For Specific Widgets)</h3>
+
+<pre><code>
+@override
+Widget build(BuildContext context) {
+  return ChangeNotifierProvider(
+    create: (context) => LocalProvider(),
+    child: SomeWidget(),
+  );
+}
+</code></pre>
+
+<h3>✅ Summary</h3>
+
+<p><strong>Multiple global providers:</strong> Use <strong>MultiProvider</strong> in main.dart.<br>
+<strong>Local provider for a widget:</strong> Use <strong>ChangeNotifierProvider</strong> inside build().</p>
+
 
   <h2>2. Difference between StatelessWidget and StatefulWidget?</h2>
   <p><strong>StatelessWidget:</strong> Immutable and cannot change its state after it is built.</p>
