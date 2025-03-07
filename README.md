@@ -765,6 +765,127 @@ ValueListenableBuilder&lt;int&gt;(
     <li>Use <b>ValueNotifier</b> when you need to track a <i>single value</i> with minimal overhead.</li>
 </ul>
 
+<h2>Provider in Flutter</h2>
+<p><code>Provider</code> is a state management solution in Flutter that helps manage and propagate state across the widget tree efficiently. It allows widgets to listen to changes and rebuild when necessary.</p>
+
+<h3>1. What is Class Provider?</h3>
+<p><code>Provider</code> is a generic class that exposes an object to the widget tree. It helps manage state without requiring manual <code>setState()</code>.</p>
+
+<h4>Example:</h4>
+<pre>
+<code>
+class Counter extends ChangeNotifier {
+  int count = 0;
+
+  void increment() {
+    count++;
+    notifyListeners(); // Notifies listeners about changes
+  }
+}
+
+void main() {
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => Counter(),
+      child: MyApp(),
+    ),
+  );
+}
+</code>
+</pre>
+
+<h3>2. What is MultiProvider?</h3>
+<p><code>MultiProvider</code> allows multiple providers to be combined and passed down the widget tree. It helps avoid nesting multiple <code>Provider</code> widgets.</p>
+
+<h4>Example:</h4>
+<pre>
+<code>
+void main() {
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => Counter()),
+        Provider<String>(create: (context) => "Hello, Provider!"),
+      ],
+      child: MyApp(),
+    ),
+  );
+}
+</code>
+</pre>
+<p>This ensures both <code>Counter</code> and <code>String</code> data can be accessed anywhere in the app.</p>
+
+<h3>3. What is Watch in Provider?</h3>
+<p>The <code>.watch</code> method listens for changes in the provider and rebuilds the widget when the provider updates.</p>
+
+<h4>Example:</h4>
+<pre>
+<code>
+class Counter extends ChangeNotifier {
+  int count = 0;
+
+  void increment() {
+    count++;
+    notifyListeners();
+  }
+}
+
+@override
+Widget build(BuildContext context) {
+  int count = context.watch&lt;Counter&gt;().count; // Watches for changes
+
+  return Column(
+    children: [
+      Text("Count: " + count.toString()),
+      ElevatedButton(
+        onPressed: () => context.read&lt;Counter&gt;().increment(),
+        child: Text("Increment"),
+      ),
+    ],
+  );
+}
+</code>
+</pre>
+<p><strong><code>watch&lt;T&gt;()</code></strong> → Listens to provider changes and triggers a rebuild.</p>
+
+<h3>4. What is Read in Provider?</h3>
+<p>The <code>.read</code> method accesses the provider <strong>without listening</strong> for changes. It is useful when calling methods inside button clicks or event handlers.</p>
+
+<h4>Example:</h4>
+<pre>
+<code>
+@override
+Widget build(BuildContext context) {
+  return ElevatedButton(
+    onPressed: () {
+      context.read&lt;Counter&gt;().increment(); // Reads the provider without listening
+    },
+    child: Text("Increment"),
+  );
+}
+</code>
+</pre>
+<p><strong><code>read&lt;T&gt;()</code></strong> → Reads the provider <strong>only once</strong>, does not rebuild the widget when the provider changes.</p>
+
+<h3>Summary of Provider Methods</h3>
+<table border="1">
+<tr>
+  <th>Method</th>
+  <th>Usage</th>
+  <th>Triggers Rebuild?</th>
+</tr>
+<tr>
+  <td><code>watch&lt;T&gt;()</code></td>
+  <td>Accesses and listens for changes</td>
+  <td>✅ Yes</td>
+</tr>
+<tr>
+  <td><code>read&lt;T&gt;()</code></td>
+  <td>Accesses without listening</td>
+  <td>❌ No</td>
+</tr>
+</table>
+
 
 <h1> Explain type of Streams in flutter ? </h1>
 
