@@ -291,6 +291,104 @@ class FirebaseService implements DatabaseService {
     </tr>
   </table>
 
+  <h2>Difference Between StateProvider and ChangeNotifierProvider in Riverpod ?</h2>
+
+<p>In <strong>Flutter's Riverpod</strong>, <code>StateProvider</code> and <code>ChangeNotifierProvider</code> are used for state management, but they have different use cases.</p>
+
+<h3>1️⃣ StateProvider</h3>
+
+<h4>✅ When to use?</h4>
+<ul>
+  <li>For <strong>simple, mutable state</strong> (e.g., integers, strings, booleans, small objects).</li>
+  <li>Ideal when <strong>state updates are straightforward</strong> (e.g., toggling a boolean, incrementing a counter).</li>
+</ul>
+
+<h4>💡 Key Characteristics:</h4>
+<ul>
+  <li>Holds a <strong>single piece of state</strong> that can be updated.</li>
+  <li>Updates are <strong>direct and synchronous</strong>.</li>
+  <li>Similar to <code>StateNotifierProvider</code>, but without complex logic.</li>
+</ul>
+
+<h4>🔥 Example: Counter App</h4>
+<p>A simple counter where the state updates directly:</p>
+<ul>
+  <li><code>final counterProvider = StateProvider&lt;int&gt;((ref) => 0);</code></li>
+  <li><code>ref.read(counterProvider.notifier).state++;</code></li>
+</ul>
+
+<p><strong>Best for:</strong> Small UI-related state changes.</p>
+
+<hr>
+
+<h3>2️⃣ ChangeNotifierProvider</h3>
+
+<h4>✅ When to use?</h4>
+<ul>
+  <li>For <strong>complex state management</strong> where multiple properties change.</li>
+  <li>When you need <strong>listeners</strong> to notify UI updates.</li>
+  <li>Ideal for <strong>handling multiple states</strong> in a single provider.</li>
+</ul>
+
+<h4>💡 Key Characteristics:</h4>
+<ul>
+  <li>Uses <code>ChangeNotifier</code>, meaning multiple UI widgets can listen for updates.</li>
+  <li>Good for <strong>business logic</strong> with methods to modify state.</li>
+</ul>
+
+<h4>🔥 Example: Todo List</h4>
+<p>A todo list where state updates using <code>notifyListeners()</code>:</p>
+<ul>
+  <li><code>class TodoModel extends ChangeNotifier { List&lt;String&gt; todos = []; void addTodo(String task) { todos.add(task); notifyListeners(); } }</code></li>
+  <li><code>final todoProvider = ChangeNotifierProvider((ref) => TodoModel());</code></li>
+</ul>
+
+<p><strong>Best for:</strong> Managing <strong>complex states</strong> like lists, API calls, or forms.</p>
+
+<hr>
+
+<h3>🚀 Quick Comparison Table</h3>
+<table border="1">
+  <tr>
+    <th>Feature</th>
+    <th>StateProvider</th>
+    <th>ChangeNotifierProvider</th>
+  </tr>
+  <tr>
+    <td><strong>Use case</strong></td>
+    <td>Simple state (e.g., int, bool)</td>
+    <td>Complex state (e.g., lists, objects)</td>
+  </tr>
+  <tr>
+    <td><strong>State type</strong></td>
+    <td>Holds a <strong>single value</strong></td>
+    <td>Manages <strong>multiple properties</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Notifies UI?</strong></td>
+    <td>UI rebuilds on <code>state</code> change</td>
+    <td>Uses <code>notifyListeners()</code></td>
+  </tr>
+  <tr>
+    <td><strong>Best for</strong></td>
+    <td>Small UI state (e.g., theme mode, counter)</td>
+    <td>Business logic (e.g., todo list, form validation)</td>
+  </tr>
+  <tr>
+    <td><strong>Performance</strong></td>
+    <td>Lightweight</td>
+    <td>Can be heavy if misused</td>
+  </tr>
+</table>
+
+<h3>🚀 Which one to use?</h3>
+<ul>
+  <li>If you just <strong>store and update a single variable</strong> → ✅ Use <code>StateProvider</code></li>
+  <li>If you need <strong>complex state management with multiple properties</strong> → ✅ Use <code>ChangeNotifierProvider</code></li>
+</ul>
+
+
+
   <h2>Difference Between Microtask and Future.delayed</h2>
 
 <p>In Dart, <code>scheduleMicrotask</code> and <code>Future.delayed</code> have different execution priorities and behaviors.</p>
