@@ -291,6 +291,81 @@ class FirebaseService implements DatabaseService {
     </tr>
   </table>
 
+  <h2>Difference Between Microtask and Future.delayed</h2>
+
+<p>In Dart, <code>scheduleMicrotask</code> and <code>Future.delayed</code> have different execution priorities and behaviors.</p>
+
+<h3>Microtask Queue</h3>
+<ul>
+  <li>Microtasks run <strong>before</strong> any event in the event queue.</li>
+  <li>They are used for high-priority, short-lived tasks.</li>
+  <li>They execute <strong>immediately after</strong> the current synchronous code finishes.</li>
+</ul>
+
+<h3>Future.delayed</h3>
+<ul>
+  <li><code>Future.delayed(Duration.zero, callback)</code> schedules the task in the event queue.</li>
+  <li>It runs after microtasks and other already-scheduled futures.</li>
+  <li>It ensures UI updates and avoids blocking the event loop.</li>
+</ul>
+
+<h3>Example</h3>
+<pre>
+<code>
+import 'dart:async';
+
+void main() {
+  print('Start');
+
+  scheduleMicrotask(() => print('Microtask 1'));
+  Future(() => print('Future 1'));
+  Future.delayed(Duration.zero, () => print('Future.delayed'));
+
+  print('End');
+}
+</code>
+</pre>
+
+<h3>Output</h3>
+<pre>
+Start
+End
+Microtask 1
+Future 1
+Future.delayed
+</pre>
+
+<h3>Key Differences</h3>
+<table border="1">
+<tr>
+  <th>Feature</th>
+  <th>Microtask</th>
+  <th>Future.delayed</th>
+</tr>
+<tr>
+  <td>Execution Order</td>
+  <td>Before event queue</td>
+  <td>After microtasks</td>
+</tr>
+<tr>
+  <td>Use Case</td>
+  <td>High-priority short tasks</td>
+  <td>Deferred execution</td>
+</tr>
+<tr>
+  <td>UI Updates</td>
+  <td>Might block UI updates</td>
+  <td>Ensures smooth UI rendering</td>
+</tr>
+</table>
+
+<h3>When to Use</h3>
+<ul>
+  <li>Use <code>scheduleMicrotask</code> for urgent logic that must run immediately.</li>
+  <li>Use <code>Future.delayed(Duration.zero)</code> to defer execution and allow UI updates.</li>
+</ul>
+
+
   <h2>What is ChangeNotifier in Provider?</h2>
 
 <p>In Flutter, <strong>ChangeNotifier</strong> helps manage state efficiently with the <strong>Provider</strong> package. It notifies widgets when state changes, triggering UI rebuilds.</p>
