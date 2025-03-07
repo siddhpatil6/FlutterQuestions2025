@@ -594,6 +594,103 @@ class MyApp extends StatelessWidget {
   </table>
 </div>
 
+<h2>Difference Between ChangeNotifier and ValueNotifier</h2>
+
+<h2>1. ChangeNotifier</h2>
+<ul>
+    <li>A broader state management class that allows multiple listeners to subscribe.</li>
+    <li>Requires calling <code>notifyListeners()</code> explicitly to inform listeners about state changes.</li>
+    <li>Used when managing complex state with multiple properties.</li>
+</ul>
+
+<h3>Example:</h3>
+<pre>
+class CounterModel extends ChangeNotifier { 
+  int _count = 0;
+
+  int get count => _count;
+
+  void increment() {
+    _count++;
+    notifyListeners(); // Notifies all listeners
+  }
+}
+</pre>
+
+<h3>Usage in UI:</h3>
+<pre>
+ChangeNotifierProvider(
+  create: (context) => CounterModel(),
+  child: Consumer&lt;CounterModel&gt;(
+    builder: (context, counter, child) {
+      return Text('${counter.count}');
+    },
+  ),
+)
+</pre>
+
+<h2>2. ValueNotifier</h2>
+<ul>
+    <li>A lightweight alternative for managing a single value.</li>
+    <li>Extends <code>ChangeNotifier</code> but optimizes for a single <code>value</code> property.</li>
+    <li>Automatically notifies listeners when <code>value</code> changes, so no need to call <code>notifyListeners()</code>.</li>
+</ul>
+
+<h3>Example:</h3>
+<pre>
+ValueNotifier&lt;int&gt; counter = ValueNotifier&lt;int&gt;(0);
+
+void increment() {
+  counter.value++; // No need for notifyListeners()
+}
+</pre>
+
+<h3>Usage in UI:</h3>
+<pre>
+ValueListenableBuilder&lt;int&gt;(
+  valueListenable: counter,
+  builder: (context, value, child) {
+    return Text('$value');
+  },
+)
+</pre>
+
+<h2>Key Differences</h2>
+<table border="1">
+    <tr>
+        <th>Feature</th>
+        <th>ChangeNotifier</th>
+        <th>ValueNotifier</th>
+    </tr>
+    <tr>
+        <td>Notifies listeners</td>
+        <td>Requires <code>notifyListeners()</code></td>
+        <td>Automatically updates</td>
+    </tr>
+    <tr>
+        <td>Ideal for</td>
+        <td>Managing multiple state variables</td>
+        <td>Managing a single value</td>
+    </tr>
+    <tr>
+        <td>Performance</td>
+        <td>Slightly heavier</td>
+        <td>More lightweight</td>
+    </tr>
+    <tr>
+        <td>Usage with Provider</td>
+        <td><code>ChangeNotifierProvider</code></td>
+        <td>Used with <code>ValueListenableBuilder</code></td>
+    </tr>
+</table>
+
+<h2>When to Use What?</h2>
+<ul>
+    <li>Use <b>ChangeNotifier</b> when you have <i>multiple state variables</i> in a model.</li>
+    <li>Use <b>ValueNotifier</b> when you need to track a <i>single value</i> with minimal overhead.</li>
+</ul>
+
+
 <h1> Explain type of Streams in flutter ? </h1>
 
 <h2>1. Single-Subscription Stream</h2>
