@@ -886,6 +886,94 @@ Widget build(BuildContext context) {
 </tr>
 </table>
 
+<h2>Using Consumer</h2>
+
+<h3>When to use?</h3>
+<ul>
+    <li>When you want to rebuild only a specific widget instead of the entire widget tree.</li>
+    <li>Useful when only a part of the widget depends on the provider.</li>
+    <li>Helps optimize performance by minimizing unnecessary widget rebuilds.</li>
+</ul>
+
+<h3>Example:</h3>
+<pre>
+    <code>
+    Consumer&lt;CounterProvider&gt;(
+      builder: (context, provider, child) {
+        return Text('Count: ${provider.count}');
+      },
+    );
+    </code>
+</pre>
+<p>Here, only the Text widget rebuilds when count changes, not the entire widget tree.</p>
+
+<h2>Using context.watch&lt;T&gt;()</h2>
+
+<h3>When to use?</h3>
+<ul>
+    <li>When you are inside a build method and want to rebuild the entire widget when the provider updates.</li>
+    <li>Should be used directly inside the build method.</li>
+    <li>Avoid using watch inside initState or onPressed, as it causes rebuilds.</li>
+</ul>
+
+<h3>Example:</h3>
+<pre>
+    <code>
+    @override
+    Widget build(BuildContext context) {
+      final counterProvider = context.watch&lt;CounterProvider&gt;();
+      return Text('Count: ${counterProvider.count}');
+    }
+    </code>
+</pre>
+<p>Here, the entire widget rebuilds when count changes.</p>
+
+<h2>When to Use What?</h2>
+<table border="1">
+    <tr>
+        <th>Scenario</th>
+        <th>Use Consumer</th>
+        <th>Use watch</th>
+    </tr>
+    <tr>
+        <td>Rebuild a specific widget only</td>
+        <td>Yes</td>
+        <td>No</td>
+    </tr>
+    <tr>
+        <td>Rebuild the entire widget</td>
+        <td>No</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td>Inside build() method</td>
+        <td>Not needed</td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td>Inside initState() or onPressed()</td>
+        <td>No</td>
+        <td>No (use read instead)</td>
+    </tr>
+</table>
+
+<h2>Bonus: When to Use read?</h2>
+<p>If you only want to access the provider without listening for updates, use read:</p>
+<pre>
+    <code>
+    final counterProvider = context.read&lt;CounterProvider&gt;();
+    counterProvider.increment(); // Does not rebuild the widget
+    </code>
+</pre>
+
+<h2>Final Tip</h2>
+<ul>
+    <li>Use watch when the entire widget needs rebuilding.</li>
+    <li>Use Consumer when only part of the widget should rebuild.</li>
+    <li>Use read when you just need to access the provider without listening.</li>
+</ul>
+
+
 
 <h1> Explain type of Streams in flutter ? </h1>
 
