@@ -973,6 +973,49 @@ Widget build(BuildContext context) {
     <li>Use read when you just need to access the provider without listening.</li>
 </ul>
 
+<h2>Platform Channels in Flutter</h2>
+
+<p>Flutter’s UI runs on Dart, but sometimes we need to communicate with native Android (Kotlin) or iOS (Swift) code for device-specific features like battery info, sensors, or Bluetooth. <strong>Platform Channels</strong> make this possible.</p>
+
+<h3>⚡ Types of Platform Channels</h3>
+
+<ul>
+  <li><strong>MethodChannel</strong> → Call a native method and get a response.</li>
+  <ul>
+    <li><strong>Example:</strong> Getting battery level from Android/iOS.</li>
+    <li><strong>Example:</strong> Fetching the <strong>device model name</strong> (Perfect use case for <code>MethodChannel</code>).</li>
+  </ul>
+  <li><strong>EventChannel</strong> → Listen to a continuous stream of native events.</li>
+  <ul>
+    <li><strong>Example:</strong> Battery charging state updates.</li>
+  </ul>
+  <li><strong>BasicMessageChannel</strong> → Send and receive messages between Dart and native code.</li>
+  <ul>
+    <li><strong>Example:</strong> Sending/receiving simple data like JSON.</li>
+  </ul>
+</ul>
+
+<h3>🛠 How It Works?</h3>
+
+<ol>
+  <li>Dart sends a request via a channel.</li>
+  <li>Native code handles it (Android/iOS).</li>
+  <li>Response is sent back to Dart.</li>
+</ol>
+
+<h3>📌 Example: Fetch Device Model Name using MethodChannel</h3>
+
+<p>Since a <strong>device model does not change frequently</strong>, it is an ideal use case for <code>MethodChannel</code>.</p>
+
+<h3>🚀 Why is this a perfect example for MethodChannel?</h3>
+
+<ul>
+  <li>✅ <strong>One-time request</strong> – The device model does not change frequently.</li>
+  <li>✅ <strong>Native API required</strong> – This info comes from Android's <code>Build.MODEL</code>.</li>
+  <li>✅ <strong>Instant response</strong> – No need for real-time updates.</li>
+</ul>
+
+<p>This is a <strong>classic use case</strong> where <code>MethodChannel</code> fits perfectly.</p>
 
 
 <h1> Explain type of Streams in flutter ? </h1>
