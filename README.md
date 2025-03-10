@@ -650,6 +650,87 @@ Future.delayed
   <li>Use <code>Future.delayed(Duration.zero)</code> to defer execution and allow UI updates.</li>
 </ul>
 
+<h2>Passing Data from Next Screen to Previous Screen in Flutter</h2>
+
+<h3>1. Understanding the Concept</h3>
+<p>When navigating back from the next screen (Screen B) to the previous screen (Screen A), we can pass data using <code>Navigator.pop(context, data)</code>. The previous screen receives this data using <code>await Navigator.push()</code>.</p>
+
+<h3>2. Example Code</h3>
+
+<h4>Screen A (Receiving Data)</h4>
+<pre>
+class ScreenA extends StatefulWidget {
+  @override
+  _ScreenAState createState() => _ScreenAState();
+}
+
+class _ScreenAState extends State&lt;ScreenA&gt; {
+  String message = "No Data Received";
+
+  void navigateToScreenB() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ScreenB()),
+    );
+
+    if (result != null) {
+      setState(() {
+        message = result;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Screen A")),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(message, style: TextStyle(fontSize: 18)),
+            ElevatedButton(
+              onPressed: navigateToScreenB,
+              child: Text("Go to Screen B"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+</pre>
+
+<h4>Screen B (Sending Data)</h4>
+<pre>
+class ScreenB extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Screen B")),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context, "Hello from Screen B!");
+          },
+          child: Text("Go Back with Data"),
+        ),
+      ),
+    );
+  }
+}
+</pre>
+
+<h3>3. How It Works</h3>
+<ul>
+  <li>Screen A navigates to Screen B using <code>Navigator.push()</code>.</li>
+  <li>Screen B sends data back using <code>Navigator.pop(context, "Hello from Screen B!")</code>.</li>
+  <li>Screen A receives the data using <code>await Navigator.push()</code> and updates the UI.</li>
+</ul>
+
+<h3>4. Conclusion</h3>
+<p>This method allows passing any type of data, including strings, integers, and even model classes, without using any external components.</p>
+
 
   <h2>What is ChangeNotifier in Provider?</h2>
 
@@ -750,6 +831,7 @@ class CounterScreen extends StatelessWidget {
 </ul>
 
 <p>Using <strong>ChangeNotifier</strong> with <strong>Provider</strong> makes Flutter apps efficient and maintainable! 🚀</p>
+
 
 
 <h1>How can I change state of particular widget? </h1>
