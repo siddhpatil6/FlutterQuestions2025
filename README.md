@@ -291,6 +291,122 @@ class FirebaseService implements DatabaseService {
     </tr>
   </table>
 
+  <h2>How to Avoid Memory Leaks in Flutter (Simplified)</h2>
+
+<h3>1️⃣ Dispose Controllers (Like TextEditingController, AnimationController, etc.)</h3>
+<p>✅ <b>Why?</b> If you don’t dispose of controllers, they keep using memory even when the widget is removed.</p>
+<pre>
+class MyWidget extends StatefulWidget {
+  @override
+  _MyWidgetState createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
+  TextEditingController _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();  // ✅ Free up memory
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(controller: _controller);
+  }
+}
+</pre>
+
+<h3>2️⃣ Cancel Streams & Subscriptions</h3>
+<p>✅ <b>Why?</b> Streams keep running in the background if not canceled, leading to memory leaks.</p>
+<pre>
+late StreamSubscription _subscription;
+
+@override
+void initState() {
+  super.initState();
+  _subscription = someStream.listen((data) {
+    print(data);
+  });
+}
+
+@override
+void dispose() {
+  _subscription.cancel();  // ✅ Stop the stream
+  super.dispose();
+}
+</pre>
+
+<h3>3️⃣ Close Database Connections (Like SQLite, Firebase)</h3>
+<p>✅ <b>Why?</b> Keeping a database connection open when it’s not needed wastes memory.</p>
+<pre>
+@override
+void dispose() {
+  database.close();  // ✅ Close database when done
+  super.dispose();
+}
+</pre>
+
+<h3>4️⃣ Remove Listeners (Like ScrollController, FocusNode, etc.)</h3>
+<p>✅ <b>Why?</b> If you attach a listener but don’t remove it, it stays in memory.</p>
+<pre>
+ScrollController _scrollController = ScrollController();
+
+@override
+void initState() {
+  super.initState();
+  _scrollController.addListener(() {
+    print("Scrolling...");
+  });
+}
+
+@override
+void dispose() {
+  _scrollController.dispose();  // ✅ Remove listener
+  super.dispose();
+}
+</pre>
+
+<h3>5️⃣ Use Stateful Widgets Only When Needed</h3>
+<p>✅ <b>Why?</b> Too many <code>StatefulWidgets</code> can hold unnecessary memory.</p>
+<p>🚀 <b>Tip:</b> If a widget doesn’t need to change, use <code>StatelessWidget</code> instead!</p>
+<pre>
+class MyWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Text("Hello, Flutter!"); // ✅ No unnecessary state
+  }
+}
+</pre>
+
+<h3>6️⃣ Use ListView.builder Instead of ListView</h3>
+<p>✅ <b>Why?</b> <code>ListView.builder</code> loads only the visible items, reducing memory usage.</p>
+<pre>
+ListView.builder(
+  itemCount: 1000,
+  itemBuilder: (context, index) {
+    return ListTile(title: Text("Item $index"));
+  },
+);
+</pre>
+
+<h3>7️⃣ Use const for Widgets That Don’t Change</h3>
+<p>✅ <b>Why?</b> <code>const</code> widgets don’t rebuild unnecessarily, saving memory.</p>
+<pre>
+const Text("This is a constant text");  // ✅ Won't rebuild
+</pre>
+
+<h3>Conclusion</h3>
+<ul>
+  <li>✅ Dispose controllers (TextEditingController, AnimationController, etc.)</li>
+  <li>✅ Cancel streams & subscriptions</li>
+  <li>✅ Close database connections when done</li>
+  <li>✅ Remove unused listeners</li>
+  <li>✅ Use StatefulWidget only when needed</li>
+  <li>✅ Use ListView.builder for large lists</li>
+  <li>✅ Use const for unchanging widgets</li>
+</ul>
+
   <h2>BLoC Explained in a Super Simple Way 🚀</h2>  
 
 <p>Think of <strong>BLoC (Business Logic Component)</strong> as a <strong>chef</strong> in a restaurant. The <strong>chef (BLoC)</strong> takes <strong>orders (Events)</strong> from customers (users), processes them, and then serves the <strong>prepared dish (State)</strong> back to the customer.</p>  
